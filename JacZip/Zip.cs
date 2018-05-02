@@ -8,23 +8,23 @@ namespace JacZip
     {
         #region Compress One File Byte To Byte 
         public void Compress(string FilePath, string ZipPath, string CreateFolder) // FilePath is the path's which file you want to compress
-                                                                                   // ZipPath is the path to where you want to compress your file
+                                                                               // ZipPath is the path to where you want to compress your file
         {                                                                            //createFolder is the path to if you don't have the folder on the path.    
             try
             {
                 byte[] read = new byte[4096];
                 int readByte = 0;
 
-                MemoryStream _mStream = new MemoryStream();
-                ZipArchive archive = new ZipArchive(_mStream, ZipArchiveMode.Create, true);
-                ZipArchiveEntry fileArchive = archive.CreateEntry(FilePath);
-                var OpenFileinArchive = fileArchive.Open();
-                FileStream _fsReader = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+                MemoryStream _mStream = new MemoryStream(); // create a empty memory
+                ZipArchive archive = new ZipArchive(_mStream, ZipArchiveMode.Create, true); // create zip archive into the memory
+                ZipArchiveEntry fileArchive = archive.CreateEntry(FilePath); // show the document to archive which is in memory
+                var OpenFileinArchive = fileArchive.Open(); //create document in memory archive
+                FileStream _fsReader = new FileStream(FilePath, FileMode.Open, FileAccess.Read); //get file set permissions.
 
                 while (_fsReader.Position != _fsReader.Length)
                 {
-                    readByte = _fsReader.Read(read, 0, read.Length);
-                    OpenFileinArchive.Write(read, 0, readByte);
+                    readByte = _fsReader.Read(read, 0, read.Length);  // read file
+                    OpenFileinArchive.Write(read, 0, readByte);  // write to memory
                 }
 
                 _fsReader.Dispose();
@@ -227,8 +227,8 @@ namespace JacZip
             catch (Exception ex)
             {
                 Console.WriteLine("This is not a compressed (.zip) file or " + ex.Message + ".\nPress enter to exit."); // if we can't read the file then it 
-                Console.ReadLine();                                                                                 //means this is not a zipped file
-            }                                                                                                        // only its extention is .zip
+                Console.ReadLine();                                                                    //means this is not a zipped file
+            }                                                                                           // only its extention is .zip
             return message;
         }
 
